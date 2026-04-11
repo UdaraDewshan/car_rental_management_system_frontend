@@ -31,10 +31,8 @@ function AddCarPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      {/* Form Container (Card) */}
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-6 border border-gray-100">
         
-        {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
             Add New Car
