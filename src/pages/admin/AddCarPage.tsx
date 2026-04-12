@@ -73,7 +73,6 @@ function AddCarPage() {
           <form onSubmit={handleSubmit} className="space-y-8">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Brand Input */}
               <div className="relative">
                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">Vehicle Brand</label>
                 <div className="relative">
@@ -99,7 +98,6 @@ function AddCarPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Seat Capacity */}
               <div className="relative">
                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">Seating Capacity</label>
                 <div className="relative">
