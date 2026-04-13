@@ -4,4 +4,5 @@ export interface Car {
     seatCapacity: string;
     fuelType: string;
     pricePerDay: number | string;
+    imageUrl: string;
 }

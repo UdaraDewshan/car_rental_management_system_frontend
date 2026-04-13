@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TrashIcon, PencilSquareIcon, ArrowsRightLeftIcon, TruckIcon, UsersIcon } from '@heroicons/react/24/outline';
-import type { Car } from '../../types/Car';
+import type { Car } from '../../model/Car';
 
 function ManageCarsPage() {
     const [cars, setCars] = useState<Car[]>([]);
     const [loading, setLoading] = useState(true);
 
     const fetchCars = (): void => {
-    setLoading(true);
-    
-    axios.get<Car[]>('http://localhost:8080/car/getAll')
-        .then((response) => {
-            setCars(response.data);
-            setLoading(false);
-        })
-        .catch((error: any) => {
-            console.error("Error fetching cars:", error);
-            setLoading(false);
-        });
-};
+        setLoading(true);
+        
+        axios.get<Car[]>('http://localhost:8080/car/getAll')
+            .then((response) => {
+                setCars(response.data);
+                setLoading(false);
+            })
+            .catch((error: any) => {
+                console.error("Error fetching cars:", error);
+                setLoading(false);
+            });
+    };
 
     useEffect(() => {
         fetchCars();
     }, []);
-
 
     const handleDelete = (id: any) => {
         if(window.confirm("Are you sure you want to remove this vehicle?")) {
@@ -55,13 +54,25 @@ function ManageCarsPage() {
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
                     </div>
                 ) : (
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {cars.length > 0 ? (
                             cars.map((car: any, index) => (
                                 <div key={index} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group">
-                                    <div className="h-48 bg-slate-200 flex items-center justify-center relative">
-                                        <TruckIcon className="w-16 h-16 text-slate-400 opacity-50" />
+                                    
+                                    <div className="h-48 bg-slate-200 flex items-center justify-center relative overflow-hidden">
+                                        {car.imageUrl ? (
+                                            <img 
+                                                src={car.imageUrl} 
+                                                alt={`${car.brand} ${car.model}`}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=No+Image';
+                                                }}
+                                            />
+                                        ) : (
+                                            <TruckIcon className="w-16 h-16 text-slate-400 opacity-50" />
+                                        )}
+
                                         <div className="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                             {car.fuelType}
                                         </div>
