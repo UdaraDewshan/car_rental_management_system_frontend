@@ -9,7 +9,7 @@ function ManageCarsPage() {
 
     const fetchCars = (): void => {
         setLoading(true);
-        
+
         axios.get<Car[]>('http://localhost:8080/car/getAll')
             .then((response) => {
                 setCars(response.data);
@@ -25,22 +25,37 @@ function ManageCarsPage() {
         fetchCars();
     }, []);
 
-    const handleDelete = (id: any) => {
-        if(window.confirm("Are you sure you want to remove this vehicle?")) {
-            alert("Delete feature coming soon!");
+    const handleDelete = (id: string | undefined) => {
+        console.log("Delete button clicked! The ID is:", id);
+
+        if (!id) {
+            alert("not get car Id");
+            return;
+        }
+
+        if (window.confirm("Are you sure you want to completely remove this vehicle from the fleet?")) {
+            axios.delete(`http://localhost:8080/car/delete/${id}`)
+                .then((response) => {
+                    alert("Success!");
+                    fetchCars();
+                })
+                .catch((error) => {
+                    console.error("Error deleting car:", error);
+                    alert(`Oops! Failed to delete the car. Error: ${error.message}`);
+                });
         }
     };
 
     return (
         <div className="min-h-screen bg-transparent py-10 px-6 font-sans">
             <div className="max-w-7xl mx-auto">
-                
+
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
                     <div>
                         <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Vehicle Inventory</h1>
                         <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Monitor and manage all vehicles in your rental fleet.</p>
                     </div>
-                    <button 
+                    <button
                         onClick={fetchCars}
                         className="flex items-center justify-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-5 py-2.5 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all font-semibold"
                     >
@@ -58,11 +73,11 @@ function ManageCarsPage() {
                         {cars.length > 0 ? (
                             cars.map((car: any, index) => (
                                 <div key={index} className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-800 group">
-                                    
+
                                     <div className="h-48 bg-slate-200 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
                                         {car.imageUrl && car.imageUrl !== 'null' && car.imageUrl !== '' ? (
-                                            <img 
-                                                src={car.imageUrl} 
+                                            <img
+                                                src={car.imageUrl}
                                                 alt={`${car.brand} ${car.model}`}
                                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                 onError={(e) => {
@@ -92,15 +107,15 @@ function ManageCarsPage() {
                                         </div>
 
                                         <div className="flex gap-3">
-                                            <button 
+                                            <button
                                                 className="flex-1 flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-2.5 rounded-xl transition-all"
                                             >
                                                 <PencilSquareIcon className="w-5 h-5" />
                                                 Edit
                                             </button>
-                                            <button 
-                                                onClick={() => handleDelete(index)}
-                                                className="w-12 flex items-center justify-center bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 rounded-xl transition-all"
+                                            <button
+                                                onClick={() => handleDelete(car.carId)}
+                                                className="w-12 flex items-center justify-center bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 rounded-xl transition-all title='Delete Vehicle'"
                                             >
                                                 <TrashIcon className="w-5 h-5" />
                                             </button>
