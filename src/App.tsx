@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AddCarPage from './pages/admin/AddCarPage';
 import ManageCarsPage from './pages/admin/ManageCarsPage';
+import DashboardPage from './pages/admin/DashboardPage';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<div className="flex items-center justify-center h-96"><h2 className="text-3xl font-bold text-slate-400 dark:text-slate-500">Welcome to CarDirect Dashboard</h2></div>} />
+          <Route path="/" element={<DashboardPage />} /> 
+          
           <Route path="/admin/add-car" element={<AddCarPage />} />
           <Route path="/admin/manage-cars" element={<ManageCarsPage />} />
         </Routes>
