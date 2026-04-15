@@ -133,7 +133,7 @@ function ManageCarsPage() {
 
                                         <div className="flex gap-3">
                                             <button 
-                                                onClick={() => handleEditClick(car)} // Edit Button එකට Function එක දුන්නා
+                                                onClick={() => handleEditClick(car)}
                                                 className="flex-1 flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold py-2.5 rounded-xl transition-all"
                                             >
                                                 <PencilSquareIcon className="w-5 h-5" />
