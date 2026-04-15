@@ -6,12 +6,12 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
         
         <Navbar />
-        
+
         <Routes>
-          <Route path="/" element={<div className="flex items-center justify-center h-96"><h2 className="text-3xl font-bold text-slate-400">Welcome to CarDirect Dashboard</h2></div>} />
+          <Route path="/" element={<div className="flex items-center justify-center h-96"><h2 className="text-3xl font-bold text-slate-400 dark:text-slate-500">Welcome to CarDirect Dashboard</h2></div>} />
           <Route path="/admin/add-car" element={<AddCarPage />} />
           <Route path="/admin/manage-cars" element={<ManageCarsPage />} />
         </Routes>
