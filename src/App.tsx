@@ -9,6 +9,7 @@ import AboutPage from './pages/AboutPage';
 import Navbar from './components/Navbar'; 
 import Footer from './components/Footer'; 
 import PublicFooter from './components/PublicFooter';
+import FleetPage from './pages/FleetPage';
 
 function AppLayout() {
   const location = useLocation();
@@ -30,6 +31,7 @@ function AppLayout() {
           {/* <Route path="/login" element={<LoginPage />} /> */}
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} /> 
+          <Route path="/fleet" element={<FleetPage />} /> {/* <--- අලුත් Route එක */}
           
           <Route path="/admin/dashboard" element={<DashboardPage />} /> 
           <Route path="/admin/add-car" element={<AddCarPage />} />
@@ -44,7 +46,6 @@ function AppLayout() {
     </div>
   );
 }
-
 function App() {
   return (
     <BrowserRouter>
