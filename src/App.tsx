@@ -1,15 +1,18 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
 import AddCarPage from './pages/admin/AddCarPage';
 import ManageCarsPage from './pages/admin/ManageCarsPage';
 import DashboardPage from './pages/admin/DashboardPage';
+
 import LandingPage from './pages/LandingPage';
 import ContactPage from './pages/ContactPage'; 
 import AboutPage from './pages/AboutPage'; 
+import FleetPage from './pages/FleetPage';
+import LoginPage from './pages/LoginPage';
 
 import Navbar from './components/Navbar'; 
 import Footer from './components/Footer'; 
 import PublicFooter from './components/PublicFooter';
-import FleetPage from './pages/FleetPage';
 
 function AppLayout() {
   const location = useLocation();
@@ -28,10 +31,10 @@ function AppLayout() {
       <main className="flex-1 flex flex-col">
         <Routes>
           <Route path="/" element={<LandingPage />} /> 
-          {/* <Route path="/login" element={<LoginPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} /> 
-          <Route path="/fleet" element={<FleetPage />} /> {/* <--- අලුත් Route එක */}
+          <Route path="/fleet" element={<FleetPage />} />
           
           <Route path="/admin/dashboard" element={<DashboardPage />} /> 
           <Route path="/admin/add-car" element={<AddCarPage />} />
@@ -46,6 +49,7 @@ function AppLayout() {
     </div>
   );
 }
+
 function App() {
   return (
     <BrowserRouter>

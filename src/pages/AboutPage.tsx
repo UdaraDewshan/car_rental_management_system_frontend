@@ -3,10 +3,10 @@ import { ShieldCheckIcon, UserGroupIcon, RocketLaunchIcon, SparklesIcon } from '
 
 function AboutPage() {
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center bg-slate-950 font-sans p-4 relative overflow-hidden"
       style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920')", // Premium Car Interior/Exterior
+        backgroundImage: "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920')", 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -26,21 +26,27 @@ function AboutPage() {
         </div>
 
         <div className="flex gap-4 items-center">
-          <Link to="/login" className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2">
+          <Link
+            to="/login"
+            state={{ isSignUp: false }}
+            className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
+          >
             Sign In
           </Link>
-          <Link to="/signup" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg">
+          <Link
+            to="/login"
+            state={{ isSignUp: true }}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg"
+          >
             Sign Up
           </Link>
         </div>
       </nav>
 
       <div className="relative z-10 w-full max-w-6xl mt-24 mb-12">
-        
         <div className="bg-white/5 backdrop-blur-2xl border border-white/10 p-10 md:p-16 rounded-[40px] shadow-2xl">
-          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
+
             <div className="animate-in fade-in slide-in-from-left-10 duration-1000">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6">
                 <SparklesIcon className="w-4 h-4" /> Our Story
@@ -57,7 +63,6 @@ function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-in fade-in slide-in-from-right-10 duration-1000">
-              
               <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all group">
                 <ShieldCheckIcon className="w-10 h-10 text-emerald-400 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="text-white font-bold text-xl mb-2">Safe & Secure</h3>
@@ -72,18 +77,16 @@ function AboutPage() {
 
               <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all group sm:col-span-2">
                 <div className="flex items-start gap-6">
-                   <RocketLaunchIcon className="w-10 h-10 text-amber-400 mb-4 group-hover:rotate-12 transition-transform shrink-0" />
-                   <div>
+                  <RocketLaunchIcon className="w-10 h-10 text-amber-400 mb-4 group-hover:rotate-12 transition-transform shrink-0" />
+                  <div>
                     <h3 className="text-white font-bold text-xl mb-2">Future-Ready Fleet</h3>
                     <p className="text-slate-400 text-sm">From electric sedans to high-end SUVs, we are leading the transition to sustainable mobility.</p>
-                   </div>
+                  </div>
                 </div>
               </div>
-
             </div>
 
           </div>
-
         </div>
       </div>
     </div>

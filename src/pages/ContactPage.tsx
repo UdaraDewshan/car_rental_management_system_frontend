@@ -6,14 +6,14 @@ function ContactPage() {
     <div 
       className="min-h-screen flex items-center justify-center bg-slate-950 font-sans p-4 relative overflow-hidden"
       style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1920')", // Same background or a new one
+        backgroundImage: "url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1920')", 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
       <div className="absolute inset-0 bg-black/80 z-0"></div>
 
-     <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
+      <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
         <div className="text-2xl font-black text-white tracking-tighter uppercase">
           Udara<span className="text-indigo-500">Direct</span>.Car
         </div>
@@ -26,10 +26,18 @@ function ContactPage() {
         </div>
 
         <div className="flex gap-4 items-center">
-          <Link to="/login" className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2">
+          <Link 
+            to="/login" 
+            state={{ isSignUp: false }}
+            className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
+          >
             Sign In
           </Link>
-          <Link to="/signup" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg">
+          <Link 
+            to="/login" 
+            state={{ isSignUp: true }}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg"
+          >
             Sign Up
           </Link>
         </div>

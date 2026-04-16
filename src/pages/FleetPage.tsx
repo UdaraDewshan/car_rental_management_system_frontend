@@ -32,13 +32,13 @@ function FleetPage() {
   });
 
   const handleRentNow = () => {
-    navigate('/login');
+    navigate('/login', { state: { isSignUp: false } });
   };
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans relative overflow-hidden">
       
-      <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
+      <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-black/40 backdrop-blur-md border-b border-white/10">
         <div className="text-2xl font-black text-white tracking-tighter uppercase">
           Udara<span className="text-indigo-500">Direct</span>.Car
         </div>
@@ -51,10 +51,18 @@ function FleetPage() {
         </div>
 
         <div className="flex gap-4 items-center">
-          <Link to="/login" className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2">
+          <Link 
+            to="/login" 
+            state={{ isSignUp: false }}
+            className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
+          >
             Sign In
           </Link>
-          <Link to="/signup" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg">
+          <Link 
+            to="/login" 
+            state={{ isSignUp: true }}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg"
+          >
             Sign Up
           </Link>
         </div>
@@ -118,7 +126,7 @@ function FleetPage() {
                           alt={`${car.brand} ${car.model}`}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                           onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=600'; // Premium fallback
+                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=600'; 
                           }}
                       />
                   ) : (
