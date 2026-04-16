@@ -6,10 +6,11 @@ import LandingPage from './pages/LandingPage';
 import ContactPage from './pages/ContactPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AboutPage from './pages/AboutPage'; 
 
 function AppLayout() {
   const location = useLocation();
-  
+
   const isPublicPage = ['/', '/login', '/signup', '/contact', '/about', '/fleet'].includes(location.pathname);
 
   return (
@@ -21,6 +22,7 @@ function AppLayout() {
         <Routes>
           <Route path="/" element={<LandingPage />} /> 
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
           
           <Route path="/admin/dashboard" element={<DashboardPage />} /> 
           <Route path="/admin/add-car" element={<AddCarPage />} />
