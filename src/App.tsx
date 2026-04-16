@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import Navbar from './components/Navbar'; 
 import Footer from './components/Footer'; 
 import PublicFooter from './components/PublicFooter';
+import SignUpPage from './pages/SignUpPage';
 
 function AppLayout() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function AppLayout() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} /> 
           <Route path="/fleet" element={<FleetPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           
           <Route path="/admin/dashboard" element={<DashboardPage />} /> 
           <Route path="/admin/add-car" element={<AddCarPage />} />
