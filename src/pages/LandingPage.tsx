@@ -18,15 +18,23 @@ function LandingPage() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-10"></div>
 
-      <nav className="absolute top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center">
+      <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
         <div className="text-2xl font-black text-white tracking-tighter uppercase">
           Car<span className="text-indigo-500">Direct</span>.
         </div>
-        <div className="flex gap-4">
-          <Link to="/login" className="text-white font-bold hover:text-indigo-400 transition px-4 py-2">
+
+        <div className="hidden md:flex gap-8 items-center text-sm font-bold text-slate-300">
+          <Link to="/" className="hover:text-white transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-white transition-colors">About Us</Link>
+          <Link to="/fleet" className="hover:text-white transition-colors">Our Fleet</Link>
+          <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+        </div>
+
+        <div className="flex gap-4 items-center">
+          <Link to="/login" className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2">
             Sign In
           </Link>
-          <Link to="/signup" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-5 py-2 rounded-full font-bold transition-all">
+          <Link to="/signup" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg">
             Sign Up
           </Link>
         </div>
