@@ -4,7 +4,7 @@ import { HomeIcon, TruckIcon, PlusCircleIcon, BellIcon, UserCircleIcon, SunIcon,
 
 function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate(); // අලුතින් දැම්මා
+  const navigate = useNavigate();
   const isActive = (path: string) => location.pathname === path;
 
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,12 +17,11 @@ function Navbar() {
     }
   }, [isDarkMode]);
 
-  // ===== 🔴 Logout Function එක =====
   const handleLogout = () => {
     if(window.confirm("Are you sure you want to log out?")) {
-      localStorage.removeItem('token'); // Token එක මකනවා
-      localStorage.removeItem('role');  // Role එක මකනවා
-      navigate('/login'); // ආයෙත් ලොග් වෙන පිටුවට විසි කරනවා
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      navigate('/login');
     }
   };
 
@@ -36,12 +35,11 @@ function Navbar() {
               <TruckIcon className="w-6 h-6" />
             </div>
             <Link to="/admin/dashboard" className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase transition-colors">
-              Car<span className="text-indigo-600 dark:text-indigo-400">Direct</span>.
+              Udara<span className="text-indigo-600 dark:text-indigo-400">Direct</span>.Car
             </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-2">
-            {/* 🔴 මෙතන path එක '/admin/dashboard' කියලා හැදුවා */}
             <Link 
               to="/admin/dashboard" 
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${isActive('/admin/dashboard') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 shadow-sm border border-indigo-100 dark:border-indigo-800' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-300'}`}
@@ -74,7 +72,6 @@ function Navbar() {
               <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Admin</span>
             </button>
 
-            {/* 🔴 මෙන්න Logout Button එක */}
             <button 
               onClick={handleLogout}
               className="hidden md:flex items-center gap-2 bg-red-50 hover:bg-red-100 dark:bg-red-500/10 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl text-sm font-bold transition-all ml-1 border border-red-100 dark:border-red-500/20"

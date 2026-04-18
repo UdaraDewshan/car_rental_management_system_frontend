@@ -6,20 +6,21 @@ import DashboardPage from './pages/admin/DashboardPage';
 
 
 import LandingPage from './pages/LandingPage';
-import ContactPage from './pages/ContactPage'; 
-import AboutPage from './pages/AboutPage'; 
+import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 import FleetPage from './pages/FleetPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import BookingPage from './pages/BookingPage';
 
-import Navbar from './components/Navbar'; 
-import Footer from './components/Footer'; 
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import PublicFooter from './components/PublicFooter';
 import AdminRoute from './components/AdminRoute';
 
 function AppLayout() {
   const location = useLocation();
-  
+
   const publicPages = ['/', '/login', '/signup', '/contact', '/about', '/fleet'];
   const isPublicPage = publicPages.includes(location.pathname);
 
@@ -28,21 +29,22 @@ function AppLayout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      
+
       {!isPublicPage && <Navbar />}
 
       <main className="flex-1 flex flex-col">
         <Routes>
-          <Route path="/" element={<LandingPage />} /> 
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} /> 
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/fleet" element={<FleetPage />} />
-          
-  
+          <Route path="/book/:id" element={<BookingPage />} />
+
+
           <Route element={<AdminRoute />}>
-            <Route path="/admin/dashboard" element={<DashboardPage />} /> 
+            <Route path="/admin/dashboard" element={<DashboardPage />} />
             <Route path="/admin/add-car" element={<AddCarPage />} />
             <Route path="/admin/manage-cars" element={<ManageCarsPage />} />
           </Route>
