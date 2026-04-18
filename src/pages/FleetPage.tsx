@@ -21,7 +21,7 @@ function FleetPage() {
   const isActive = (path: string) => location.pathname === path;
 
   const handleLogout = () => {
-    if(window.confirm("Are you sure you want to log out?")) {
+    if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       navigate('/');
@@ -46,8 +46,13 @@ function FleetPage() {
     return matchesSearch && matchesFuel;
   });
 
-  const handleRentNow = () => {
-    navigate('/login', { state: { isSignUp: false } });
+  const handleRentNow = (carId: string) => {
+    if (isLoggedIn) {
+      navigate(`/book/${carId}`);
+    } else {
+      alert("Please login first to rent a vehicle.");
+      navigate('/login');
+    }
   };
 
   return (
@@ -77,7 +82,7 @@ function FleetPage() {
                 <UserCircleIcon className="w-6 h-6 text-indigo-400" />
                 <span className="hidden sm:inline">My Account</span>
               </div>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm px-5 py-2.5 rounded-full font-bold transition-all"
               >
@@ -182,7 +187,7 @@ function FleetPage() {
                       <p className="text-lg font-black text-indigo-400">LKR {car.pricePerDay}</p>
                     </div>
                     <button
-                      onClick={handleRentNow}
+                      onClick={() => handleRentNow(car.carId)}
                       className="bg-white text-slate-900 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg"
                     >
                       Rent Now
