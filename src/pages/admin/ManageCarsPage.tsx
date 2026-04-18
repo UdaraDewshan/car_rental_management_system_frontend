@@ -27,10 +27,20 @@ function ManageCarsPage() {
         fetchCars();
     }, []);
 
+
     const handleDelete = (id: string | undefined) => {
         if (!id) return;
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert("Authentication Error: Please log in again.");
+            return;
+        }
+
         if (window.confirm("Are you sure you want to completely remove this vehicle from the fleet?")) {
-            axios.delete(`http://localhost:8080/car/delete/${id}`)
+            axios.delete(`http://localhost:8080/car/delete/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
                 .then(() => {
                     fetchCars();
                 })
@@ -52,16 +62,26 @@ function ManageCarsPage() {
         }
     };
 
+
     const handleEditSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!editingCar || !editingCar.carId) return;
+
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            alert("Authentication Error: Please log in again.");
+            return;
+        }
 
         const dataToSend = {
             ...editingCar,
             pricePerDay: parseFloat(editingCar.pricePerDay as string)
         };
 
-        axios.post(`http://localhost:8080/car/update/${editingCar.carId}`, dataToSend)
+        axios.post(`http://localhost:8080/car/update/${editingCar.carId}`, dataToSend, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
             .then(() => {
                 setIsEditModalOpen(false);
                 setEditingCar(null);
