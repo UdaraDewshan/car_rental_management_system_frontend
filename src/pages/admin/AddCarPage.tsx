@@ -18,12 +18,23 @@ function AddCarPage() {
     e.preventDefault();
     setStatus({ type: null, message: '' });
 
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setStatus({ type: 'error', message: 'Authentication Error: Please log in again.' });
+      return;
+    }
+
     const dataToSend = {
       ...carData,
       pricePerDay: parseFloat(carData.pricePerDay as string)
     };
 
-    axios.post('http://localhost:8080/car/add', dataToSend)
+    axios.post('http://localhost:8080/car/add', dataToSend, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((response) => {
         setStatus({ type: 'success', message: `Superb! ${carData.brand} ${carData.model} was successfully registered.` });
         setCarData({ brand: '', model: '', seatCapacity: '', fuelType: '', pricePerDay: '', imageUrl: '' });

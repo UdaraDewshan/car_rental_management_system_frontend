@@ -1,24 +1,51 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { LockClosedIcon, EnvelopeIcon, ArrowRightOnRectangleIcon, TruckIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(''); 
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post('http://localhost:8080/auth/login', {
+        email: email,
+        password: password
+      });
+
+      const jwtToken = response.data.token;
+      const userRole = response.data.role;
+      
+      localStorage.setItem('token', jwtToken);
+      localStorage.setItem('role', userRole);
+      
+      console.log("Login Success! Role:", userRole);
       setIsLoading(false);
-      navigate('/fleet');
-    }, 1500);
+
+      if (userRole === 'ADMIN') {
+        navigate('/admin/dashboard'); 
+      } else {
+        navigate('/fleet');
+      }
+      
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Invalid Email or Password. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
+    
     <div 
       className="min-h-screen flex items-center justify-center bg-slate-950 font-sans p-4 relative overflow-hidden"
       style={{
