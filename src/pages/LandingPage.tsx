@@ -4,12 +4,12 @@ import { ArrowRightIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 function LandingPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden font-sans">
-      
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
+
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
         poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1920"
       >
@@ -19,7 +19,7 @@ function LandingPage() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-10"></div>
 
       <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
-         <div className="text-2xl font-black text-white tracking-tighter uppercase">
+        <div className="text-2xl font-black text-white tracking-tighter uppercase">
           Udara<span className="text-indigo-500">Direct</span>.Car
         </div>
 
@@ -31,15 +31,15 @@ function LandingPage() {
         </div>
 
         <div className="flex gap-4 items-center">
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
           >
             Sign In
           </Link>
-          <Link 
-            to="/signup" 
-            className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg"
+          <Link
+            to="/signup"
+            className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-indigo-500/30 border-none outline-none"
           >
             Sign Up
           </Link>
@@ -55,19 +55,19 @@ function LandingPage() {
         <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-tight animate-in slide-in-from-bottom-8 fade-in duration-1000 delay-150">
           Experience the Drive of Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">Dreams.</span>
         </h1>
-        
+
         <p className="text-lg md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto font-medium animate-in slide-in-from-bottom-10 fade-in duration-1000 delay-300">
           Whether you need a luxury ride for a business meeting or an SUV for a weekend getaway, we have the perfect vehicle waiting for you.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-in slide-in-from-bottom-12 fade-in duration-1000 delay-500">
-          <Link 
-            to="/fleet" 
+          <Link
+            to="/fleet"
             className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-indigo-600/30 w-full sm:w-auto justify-center"
           >
             Explore Vehicles <ArrowRightIcon className="w-5 h-5" />
           </Link>
-          
+
           <button className="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold text-lg transition-all w-full sm:w-auto justify-center">
             <PlayCircleIcon className="w-6 h-6" /> How it works
           </button>

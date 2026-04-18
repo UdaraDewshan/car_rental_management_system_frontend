@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MagnifyingGlassIcon, FunnelIcon, UsersIcon, TruckIcon } from '@heroicons/react/24/outline';
-import type { Car } from '../model/Car'; 
+import type { Car } from '../model/Car';
 
 function FleetPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFuel, setSelectedFuel] = useState('All');
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function FleetPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans relative overflow-hidden">
-      
+
       <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-black/40 backdrop-blur-md border-b border-white/10">
         <div className="text-2xl font-black text-white tracking-tighter uppercase">
           Udara<span className="text-indigo-500">Direct</span>.Car
@@ -51,15 +51,15 @@ function FleetPage() {
         </div>
 
         <div className="flex gap-4 items-center">
-           <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
           >
             Sign In
           </Link>
-          <Link 
-            to="/signup" 
-            className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm px-5 py-2.5 rounded-full font-bold transition-all shadow-lg"
+          <Link
+            to="/signup"
+            className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-indigo-500/30 border-none outline-none"
           >
             Sign Up
           </Link>
@@ -77,11 +77,11 @@ function FleetPage() {
 
       <div className="max-w-7xl mx-auto px-6 mb-12 relative z-10">
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-3xl flex flex-col md:flex-row gap-4 shadow-2xl">
-          
+
           <div className="flex-1 relative">
             <MagnifyingGlassIcon className="absolute top-3.5 left-4 w-5 h-5 text-slate-400" />
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search by brand or model..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -91,7 +91,7 @@ function FleetPage() {
 
           <div className="w-full md:w-64 relative">
             <FunnelIcon className="absolute top-3.5 left-4 w-5 h-5 text-slate-400" />
-            <select 
+            <select
               value={selectedFuel}
               onChange={(e) => setSelectedFuel(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-black/20 border border-white/5 text-white rounded-2xl focus:ring-2 focus:ring-indigo-500 transition-all outline-none appearance-none cursor-pointer"
@@ -110,46 +110,46 @@ function FleetPage() {
       <div className="max-w-7xl mx-auto px-6 pb-24 relative z-10">
         {loading ? (
           <div className="flex justify-center items-center h-64">
-             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
           </div>
         ) : filteredCars.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredCars.map((car: any, index) => (
               <div key={index} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:bg-white/10 transition-all duration-300 group flex flex-col">
-                
+
                 <div className="h-52 bg-black/40 relative overflow-hidden flex items-center justify-center">
                   {car.imageUrl && car.imageUrl !== 'null' && car.imageUrl !== '' ? (
-                      <img 
-                          src={car.imageUrl} 
-                          alt={`${car.brand} ${car.model}`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=600'; 
-                          }}
-                      />
+                    <img
+                      src={car.imageUrl}
+                      alt={`${car.brand} ${car.model}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=600';
+                      }}
+                    />
                   ) : (
-                      <TruckIcon className="w-16 h-16 text-slate-600 opacity-50" />
+                    <TruckIcon className="w-16 h-16 text-slate-600 opacity-50" />
                   )}
                   <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                      {car.fuelType}
+                    {car.fuelType}
                   </div>
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
                   <div className="mb-4">
-                      <h3 className="text-xl font-bold text-white leading-tight">{car.brand} {car.model}</h3>
-                      <div className="flex items-center gap-1.5 mt-2 text-slate-400">
-                          <UsersIcon className="w-4 h-4" />
-                          <span className="text-sm font-medium">{car.seatCapacity} Seats</span>
-                      </div>
+                    <h3 className="text-xl font-bold text-white leading-tight">{car.brand} {car.model}</h3>
+                    <div className="flex items-center gap-1.5 mt-2 text-slate-400">
+                      <UsersIcon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{car.seatCapacity} Seats</span>
+                    </div>
                   </div>
-                  
+
                   <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
                     <div>
                       <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Daily Rate</p>
                       <p className="text-lg font-black text-indigo-400">LKR {car.pricePerDay}</p>
                     </div>
-                    <button 
+                    <button
                       onClick={handleRentNow}
                       className="bg-white text-slate-900 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg"
                     >
@@ -164,7 +164,7 @@ function FleetPage() {
         ) : (
           <div className="text-center py-20 bg-white/5 border border-white/10 rounded-3xl">
             <p className="text-slate-400 text-lg">No vehicles found matching your criteria.</p>
-            <button onClick={() => {setSearchTerm(''); setSelectedFuel('All');}} className="mt-4 text-indigo-400 hover:text-indigo-300 font-bold underline">
+            <button onClick={() => { setSearchTerm(''); setSelectedFuel('All'); }} className="mt-4 text-indigo-400 hover:text-indigo-300 font-bold underline">
               Clear Filters
             </button>
           </div>
