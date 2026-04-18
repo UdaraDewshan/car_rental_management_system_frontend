@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // useLocation අලුතින් ගත්තා
 import axios from 'axios';
-import { MagnifyingGlassIcon, FunnelIcon, UsersIcon, TruckIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, FunnelIcon, UsersIcon, TruckIcon, UserCircleIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline'; // Icons අප්ඩේට් කළා
 import type { Car } from '../model/Car';
 
 function FleetPage() {
@@ -12,6 +12,21 @@ function FleetPage() {
   const [selectedFuel, setSelectedFuel] = useState('All');
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  const isLoggedIn = !!token;
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    if(window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     axios.get<Car[]>('http://localhost:8080/car/getAll')
@@ -43,26 +58,43 @@ function FleetPage() {
           Udara<span className="text-indigo-500">Direct</span>.Car
         </div>
 
-        <div className="hidden md:flex gap-8 items-center text-sm font-bold text-slate-300">
-          <Link to="/" className="hover:text-white transition-colors">Home</Link>
-          <Link to="/about" className="hover:text-white transition-colors">About Us</Link>
-          <Link to="/fleet" className="hover:text-white transition-colors">Our Fleet</Link>
-          <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+        <div className="hidden md:flex gap-8 items-center text-sm font-bold">
+          <Link to="/" className={`transition-colors ${isActive('/') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>Home</Link>
+          <Link to="/about" className={`transition-colors ${isActive('/about') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>About Us</Link>
+          <Link to="/fleet" className={`transition-colors ${isActive('/fleet') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>Our Fleet</Link>
+          <Link to="/contact" className={`transition-colors ${isActive('/contact') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>Contact</Link>
         </div>
 
         <div className="flex gap-4 items-center">
-          <Link
-            to="/login"
-            className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2"
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/signup"
-            className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-indigo-500/30 border-none outline-none"
-          >
-            Sign Up
-          </Link>
+          {isLoggedIn ? (
+            <>
+              {role === 'ADMIN' && (
+                <Link to="/admin/dashboard" className="hidden sm:block text-indigo-400 text-sm font-bold hover:text-indigo-300 transition px-2">
+                  Admin Dashboard
+                </Link>
+              )}
+              <div className="flex items-center gap-2 text-white text-sm font-bold px-3 py-2">
+                <UserCircleIcon className="w-6 h-6 text-indigo-400" />
+                <span className="hidden sm:inline">My Account</span>
+              </div>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm px-5 py-2.5 rounded-full font-bold transition-all"
+              >
+                <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-white text-sm font-bold hover:text-indigo-400 transition px-4 py-2">
+                Sign In
+              </Link>
+              <Link to="/signup" className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-indigo-500/30 border-none outline-none">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
