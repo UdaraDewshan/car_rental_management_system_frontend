@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { LockClosedIcon, EnvelopeIcon, TruckIcon, UserIcon, PhoneIcon, UserPlusIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 function SignUpPage() {
@@ -13,7 +14,7 @@ function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (password !== confirmPassword) {
@@ -24,10 +25,23 @@ function SignUpPage() {
     setError('');
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post('http://localhost:8080/auth/register', {
+        userName: name,
+        email: email,
+        phoneNumber: phone,
+        password: password
+      });
+
+      console.log("Registration Success:", response.data);
       setIsLoading(false);
       navigate('/login');
-    }, 1500);
+      
+    } catch (err) {
+      console.error("Registration failed:", err);
+      setError("Registration failed. Email might already be in use.");
+      setIsLoading(false);
+    }
   };
 
   return (
