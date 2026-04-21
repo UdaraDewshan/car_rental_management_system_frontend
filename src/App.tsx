@@ -16,6 +16,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PublicFooter from './components/PublicFooter';
 import AdminRoute from './components/AdminRoute';
+import ManageBookingsPage from './pages/admin/ManageBookingsPage';
 
 function AppLayout() {
   const location = useLocation();
@@ -45,6 +46,7 @@ function AppLayout() {
             <Route path="/admin/dashboard" element={<DashboardPage />} />
             <Route path="/admin/add-car" element={<AddCarPage />} />
             <Route path="/admin/manage-cars" element={<ManageCarsPage />} />
+            <Route path="/admin/manage-bookings" element={<ManageBookingsPage />} />
           </Route>
 
         </Routes>
