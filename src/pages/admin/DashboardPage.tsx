@@ -1,34 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TruckIcon, CurrencyDollarIcon, PresentationChartLineIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { TruckIcon, CurrencyDollarIcon, CalendarDaysIcon, UserIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import type { Car } from '../../model/Car';
+import type { Booking } from '../../model/Booking';
 
 function DashboardPage() {
   const [cars, setCars] = useState<Car[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [drivers, setDrivers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchCars();
-  }, []);
+  const token = localStorage.getItem('token');
 
-  const fetchCars = () => {
-    axios.get<Car[]>('http://localhost:8080/car/getAll')
-      .then((response) => {
-        setCars(response.data);
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [carsRes, bookingsRes, driversRes] = await Promise.all([
+          axios.get('http://localhost:8080/car/getAll'),
+          axios.get('http://localhost:8080/booking/getAll', { headers: { 'Authorization': `Bearer ${token}` } }),
+          axios.get('http://localhost:8080/driver/getAll', { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
+        
+        setCars(carsRes.data);
+        setBookings(bookingsRes.data);
+        setDrivers(driversRes.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching cars:", error);
-        setLoading(false);
-      });
-  };
+      }
+    };
+
+    fetchDashboardData();
+  }, [token]);
 
   const totalCars = cars.length;
+  const totalBookings = bookings.length;
   
-  const avgPrice = totalCars > 0 
-    ? cars.reduce((sum, car) => sum + Number(car.pricePerDay), 0) / totalCars 
-    : 0;
+  const totalRevenue = bookings
+    .filter(b => b.status === 'APPROVED' || b.status === 'COMPLETED')
+    .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+
+  const availableDrivers = drivers.filter(d => d.states === true).length;
 
   const fuelData = [
     { name: 'Petrol', count: cars.filter(c => c.fuelType === 'Petrol').length, color: '#6366f1' },
@@ -45,7 +59,7 @@ function DashboardPage() {
         
         <div>
           <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">System Overview</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Welcome back, Admin! Here is what's happening with your fleet today.</p>
+          <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Welcome back, Admin! Here is your live business data.</p>
         </div>
 
         {loading ? (
@@ -54,36 +68,46 @@ function DashboardPage() {
             </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                <div className="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-2xl text-indigo-600 dark:text-indigo-400">
-                  <TruckIcon className="w-8 h-8" />
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-2 transform hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-4">
+                  <div className="bg-indigo-50 dark:bg-indigo-900/30 p-3 rounded-xl text-indigo-600 dark:text-indigo-400">
+                    <TruckIcon className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Fleet</p>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Total Fleet</p>
-                  <h3 className="text-3xl font-black text-slate-900 dark:text-white">{totalCars} <span className="text-lg text-slate-400 font-medium">Vehicles</span></h3>
-                </div>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2">{totalCars}</h3>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                <div className="bg-emerald-50 dark:bg-emerald-900/30 p-4 rounded-2xl text-emerald-600 dark:text-emerald-400">
-                  <CurrencyDollarIcon className="w-8 h-8" />
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-2 transform hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-4">
+                  <div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-xl text-blue-600 dark:text-blue-400">
+                    <CalendarDaysIcon className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Bookings</p>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Avg. Daily Rate</p>
-                  <h3 className="text-3xl font-black text-slate-900 dark:text-white"><span className="text-lg text-slate-400 font-medium mr-1">Rs.</span>{avgPrice.toFixed(0)}</h3>
-                </div>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2">{totalBookings}</h3>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                <div className="bg-amber-50 dark:bg-amber-900/30 p-4 rounded-2xl text-amber-600 dark:text-amber-400">
-                  <PresentationChartLineIcon className="w-8 h-8" />
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-2 transform hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-4">
+                  <div className="bg-emerald-50 dark:bg-emerald-900/30 p-3 rounded-xl text-emerald-600 dark:text-emerald-400">
+                    <CurrencyDollarIcon className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Revenue</p>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">System Status</p>
-                  <h3 className="text-2xl font-black text-emerald-500 dark:text-emerald-400">Online & Active</h3>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2"><span className="text-lg text-slate-400 font-medium mr-1">LKR</span>{totalRevenue.toLocaleString()}</h3>
+              </div>
+
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-2 transform hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-4">
+                  <div className="bg-amber-50 dark:bg-amber-900/30 p-3 rounded-xl text-amber-600 dark:text-amber-400">
+                    <UserIcon className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Free Drivers</p>
                 </div>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2">{availableDrivers} <span className="text-lg text-slate-400 font-medium">Available</span></h3>
               </div>
 
             </div>
