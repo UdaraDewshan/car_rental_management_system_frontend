@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CalendarDaysIcon, UserIcon, ShieldCheckIcon, TruckIcon, UserCircleIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import type { Car } from '../model/Car';
+import Swal from 'sweetalert2';
 
 function BookingPage() {
     const { id } = useParams();
@@ -34,7 +35,6 @@ function BookingPage() {
             return;
         }
 
-        //
         axios.get(`http://localhost:8080/car/search/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -51,7 +51,6 @@ function BookingPage() {
                 setLoading(false);
             });
     }, [id, token, navigate]);
-    //
 
     const calculateTotal = () => {
         if (!startDate || !endDate || !car) return 0;
@@ -74,7 +73,14 @@ function BookingPage() {
         const total = calculateTotal();
 
         if (total <= 0) {
-            alert("Please select valid dates. End date must be after start date.");
+            Swal.fire({
+                title: 'Invalid Dates',
+                text: 'Please select valid dates. Return date must be after pick-up date.',
+                icon: 'error',
+                confirmButtonColor: '#4f46e5',
+                background: '#1e293b',
+                color: '#ffffff'
+            });
             return;
         }
 
@@ -92,12 +98,39 @@ function BookingPage() {
             await axios.post('http://localhost:8080/booking/add', bookingData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            alert("Booking Confirmed! Thank you for choosing CarDirect.");
-            navigate('/fleet');
-        } catch (error) {
+
+            Swal.fire({
+                title: 'Booking Confirmed!',
+                text: `Thank you! Your request for ${car?.brand} ${car?.model} has been sent.`,
+                icon: 'success',
+                confirmButtonColor: '#4f46e5',
+                background: '#1e293b',
+                color: '#ffffff'
+            }).then(() => {
+                navigate('/fleet');
+            });
+
+        } catch (error: any) {
             console.error(error);
-            alert("Booking failed. Please try again.");
             setIsSubmitting(false);
+
+            let errorMsg = "Booking failed. Please try again.";
+            if (error.response && error.response.data) {
+                if (typeof error.response.data === 'string') {
+                    errorMsg = error.response.data;
+                } else if (error.response.data.message) {
+                    errorMsg = error.response.data.message;
+                }
+            }
+
+            Swal.fire({
+                title: 'Not Available!',
+                text: errorMsg, 
+                icon: 'warning',
+                confirmButtonColor: '#ef4444',
+                background: '#1e293b',
+                color: '#ffffff'
+            });
         }
     };
 
@@ -140,7 +173,6 @@ function BookingPage() {
 
             <div className="pt-32 pb-12 px-6">
                 <div className="max-w-5xl mx-auto">
-
 
                     {loading ? (
                         <div className="flex justify-center items-center h-64">
