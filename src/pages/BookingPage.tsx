@@ -125,7 +125,7 @@ function BookingPage() {
 
             Swal.fire({
                 title: 'Not Available!',
-                text: errorMsg, 
+                text: errorMsg,
                 icon: 'warning',
                 confirmButtonColor: '#ef4444',
                 background: '#1e293b',
@@ -157,10 +157,10 @@ function BookingPage() {
                             Admin Dashboard
                         </Link>
                     )}
-                    <div className="flex items-center gap-2 text-white text-sm font-bold px-3 py-2">
+                    <Link to="/my-account" className="flex items-center gap-2 text-white text-sm font-bold px-3 py-2 hover:text-indigo-400 transition-colors">
                         <UserCircleIcon className="w-6 h-6 text-indigo-400" />
                         <span className="hidden sm:inline">My Account</span>
-                    </div>
+                    </Link>
                     <button
                         onClick={handleLogout}
                         className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm px-5 py-2.5 rounded-full font-bold transition-all"

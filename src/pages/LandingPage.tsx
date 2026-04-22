@@ -12,7 +12,7 @@ function LandingPage() {
   const isActive = (path: string) => location.pathname === path;
 
   const handleLogout = () => {
-    if(window.confirm("Are you sure you want to log out?")) {
+    if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       navigate('/');
@@ -21,7 +21,7 @@ function LandingPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden font-sans">
-      
+
       <video
         autoPlay
         loop
@@ -55,13 +55,13 @@ function LandingPage() {
                   Admin Dashboard
                 </Link>
               )}
-              
-              <div className="flex items-center gap-2 text-white text-sm font-bold px-3 py-2">
+
+              <Link to="/my-account" className="flex items-center gap-2 text-white text-sm font-bold px-3 py-2 hover:text-indigo-400 transition-colors">
                 <UserCircleIcon className="w-6 h-6 text-indigo-400" />
                 <span className="hidden sm:inline">My Account</span>
-              </div>
-              
-              <button 
+              </Link>
+
+              <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm px-5 py-2.5 rounded-full font-bold transition-all"
               >
@@ -87,8 +87,8 @@ function LandingPage() {
           )}
         </div>
       </nav>
-      
-      
+
+
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto mt-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-indigo-300 text-sm font-bold uppercase tracking-widest mb-8 animate-in slide-in-from-bottom-5 fade-in duration-700">
           <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>

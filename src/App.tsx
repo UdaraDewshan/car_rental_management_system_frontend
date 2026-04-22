@@ -11,6 +11,7 @@ import FleetPage from './pages/FleetPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import BookingPage from './pages/BookingPage';
+import MyAccountPage from './pages/MyAccountPage';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,10 +19,11 @@ import PublicFooter from './components/PublicFooter';
 import AdminRoute from './components/AdminRoute';
 import ManageBookingsPage from './pages/admin/ManageBookingsPage';
 
+
 function AppLayout() {
   const location = useLocation();
 
-  const publicPages = ['/', '/login', '/signup', '/contact', '/about', '/fleet'];
+  const publicPages = ['/', '/login', '/signup', '/contact', '/about', '/fleet', '/my-account'];
   const isPublicPage = publicPages.includes(location.pathname) || location.pathname.startsWith('/book/');
 
   const hideFooterPages = ['/', '/login', '/signup'];
@@ -41,6 +43,7 @@ function AppLayout() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/fleet" element={<FleetPage />} />
           <Route path="/book/:id" element={<BookingPage />} />
+          <Route path="/my-account" element={<MyAccountPage />} />
 
           <Route element={<AdminRoute />}>
             <Route path="/admin/dashboard" element={<DashboardPage />} />
