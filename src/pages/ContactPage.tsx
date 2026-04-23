@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { EnvelopeIcon, PhoneIcon, MapPinIcon, UserCircleIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 
 function ContactPage() {
@@ -11,8 +12,20 @@ function ContactPage() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Ready to leave?',
+      text: "You will be logged out of your account.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#4f46e5',
+      confirmButtonText: 'Yes, log out',
+      background: '#1e293b',
+      color: '#ffffff'
+    });
+
+    if (result.isConfirmed) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       navigate('/');

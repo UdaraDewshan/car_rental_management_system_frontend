@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { PlusCircleIcon, DocumentPlusIcon, UsersIcon, BeakerIcon, CurrencyDollarIcon, CheckCircleIcon, XCircleIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import Swal from 'sweetalert2';
+import { PlusCircleIcon, DocumentPlusIcon, UsersIcon, BeakerIcon, CurrencyDollarIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import type { Car } from '../../model/Car';
 
 function AddCarPage() {
@@ -8,20 +9,24 @@ function AddCarPage() {
     brand: '', model: '', seatCapacity: '', fuelType: '', pricePerDay: '', imageUrl: ''
   });
 
-  const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setCarData({ ...carData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus({ type: null, message: '' });
 
     const token = localStorage.getItem('token');
 
     if (!token) {
-      setStatus({ type: 'error', message: 'Authentication Error: Please log in again.' });
+      Swal.fire({
+        title: 'Authentication Error',
+        text: 'Please log in again.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+        background: '#1e293b',
+        color: '#ffffff'
+      });
       return;
     }
 
@@ -36,12 +41,28 @@ function AddCarPage() {
       }
     })
       .then((response) => {
-        setStatus({ type: 'success', message: `Superb! ${carData.brand} ${carData.model} was successfully registered.` });
+        Swal.fire({
+          title: 'Vehicle Added!',
+          text: `Superb! ${carData.brand} ${carData.model} was successfully registered.`,
+          icon: 'success',
+          confirmButtonColor: '#10b981',
+          background: '#1e293b',
+          color: '#ffffff'
+        });
+        
         setCarData({ brand: '', model: '', seatCapacity: '', fuelType: '', pricePerDay: '', imageUrl: '' });
       })
       .catch((error) => {
         console.error('There was an error!', error);
-        setStatus({ type: 'error', message: 'Oops! Something went wrong while saving the car. Please try again.' });
+        
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Something went wrong while saving the car. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#ef4444',
+          background: '#1e293b',
+          color: '#ffffff'
+        });
       });
   };
 
@@ -59,15 +80,6 @@ function AddCarPage() {
             <p className="text-slate-500 dark:text-slate-400 text-lg">Add a new vehicle to your fleet inventory. The live preview will update automatically.</p>
           </div>
 
-          {status.type && (
-            <div className={`mb-8 p-5 rounded-2xl flex items-start gap-4 border ${status.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-400' : 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-800/50 text-red-800 dark:text-red-400'} transition-all duration-500`}>
-              {status.type === 'success' ? <CheckCircleIcon className="w-6 h-6 mt-0.5" /> : <XCircleIcon className="w-6 h-6 mt-0.5" />}
-              <div>
-                <p className="font-bold text-sm uppercase tracking-wider">{status.type === 'success' ? 'Success' : 'Error'}</p>
-                <p className="text-base mt-1">{status.message}</p>
-              </div>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { TruckIcon, SunIcon, MoonIcon, ArrowRightOnRectangleIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 function Navbar() {
@@ -17,8 +18,20 @@ function Navbar() {
     }
   }, [isDarkMode]);
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Ready to leave?',
+      text: "You will be logged out of your Admin account.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#4f46e5',
+      confirmButtonText: 'Yes, log out',
+      background: '#1e293b',
+      color: '#ffffff'
+    });
+
+    if (result.isConfirmed) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       navigate('/login');
@@ -45,7 +58,6 @@ function Navbar() {
               Udara<span className="text-indigo-500">Direct</span>
             </Link>
           </div>
-
 
           <div className="hidden md:flex items-center gap-6">
             <Link to="/admin/dashboard" className={linkStyle('/admin/dashboard')}>

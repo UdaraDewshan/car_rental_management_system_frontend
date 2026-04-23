@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { LockClosedIcon, EnvelopeIcon, ArrowRightOnRectangleIcon, TruckIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(''); 
 
     try {
       const response = await axios.post('http://localhost:8080/auth/login', {
@@ -31,21 +30,38 @@ function LoginPage() {
       console.log("Login Success! Role:", userRole);
       setIsLoading(false);
 
-      if (userRole === 'ADMIN') {
-        navigate('/admin/dashboard'); 
-      } else {
-        navigate('/fleet');
-      }
+      Swal.fire({
+        title: 'Welcome Back!',
+        text: 'Login successful. Redirecting...',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+        background: '#1e293b',
+        color: '#ffffff'
+      }).then(() => {
+        if (userRole === 'ADMIN') {
+          navigate('/admin/dashboard'); 
+        } else {
+          navigate('/fleet');
+        }
+      });
       
     } catch (err) {
       console.error("Login failed:", err);
-      setError("Invalid Email or Password. Please try again.");
       setIsLoading(false);
+
+      Swal.fire({
+        title: 'Login Failed!',
+        text: 'Invalid Email or Password. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+        background: '#1e293b',
+        color: '#ffffff'
+      });
     }
   };
 
   return (
-    
     <div 
       className="min-h-screen flex items-center justify-center bg-slate-950 font-sans p-4 relative overflow-hidden"
       style={{
@@ -56,7 +72,6 @@ function LoginPage() {
     >
       <div className="absolute inset-0 bg-black/70 pointer-events-none z-0"></div>
 
-
       <div className="absolute top-0 left-0 w-full p-6 sm:p-8 z-30">
         <Link 
           to="/" 
@@ -66,7 +81,6 @@ function LoginPage() {
           Back to Home
         </Link>
       </div>
-
 
       <div className="w-full max-w-md relative z-20">
         <div className="bg-white/10 backdrop-blur-2xl p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-300">

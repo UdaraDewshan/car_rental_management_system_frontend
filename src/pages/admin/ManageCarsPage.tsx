@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { TrashIcon, PencilSquareIcon, ArrowsRightLeftIcon, TruckIcon, UsersIcon, XMarkIcon, BeakerIcon, CurrencyDollarIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import type { Car } from '../../model/Car';
 
@@ -27,26 +28,59 @@ function ManageCarsPage() {
         fetchCars();
     }, []);
 
-
-    const handleDelete = (id: string | undefined) => {
+    const handleDelete = async (id: string | undefined) => {
         if (!id) return;
         const token = localStorage.getItem('token');
 
         if (!token) {
-            alert("Authentication Error: Please log in again.");
+            Swal.fire({
+                title: 'Authentication Error',
+                text: 'Please log in again.',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+                background: '#1e293b',
+                color: '#ffffff'
+            });
             return;
         }
 
-        if (window.confirm("Are you sure you want to completely remove this vehicle from the fleet?")) {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to completely remove this vehicle from the fleet!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#4f46e5', 
+            confirmButtonText: 'Yes, delete it!',
+            background: '#1e293b',
+            color: '#ffffff'
+        });
+
+        if (result.isConfirmed) {
             axios.delete(`http://localhost:8080/car/delete/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
                 .then(() => {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'The vehicle has been removed successfully.',
+                        icon: 'success',
+                        confirmButtonColor: '#10b981',
+                        background: '#1e293b',
+                        color: '#ffffff'
+                    });
                     fetchCars();
                 })
                 .catch((error) => {
                     console.error("Error deleting car:", error);
-                    alert(`Oops! Failed to delete the car. Error: ${error.message}`);
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: `Failed to delete the car. Error: ${error.message}`,
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444',
+                        background: '#1e293b',
+                        color: '#ffffff'
+                    });
                 });
         }
     };
@@ -62,7 +96,6 @@ function ManageCarsPage() {
         }
     };
 
-
     const handleEditSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!editingCar || !editingCar.carId) return;
@@ -70,7 +103,14 @@ function ManageCarsPage() {
         const token = localStorage.getItem('token');
         
         if (!token) {
-            alert("Authentication Error: Please log in again.");
+            Swal.fire({
+                title: 'Authentication Error',
+                text: 'Please log in again.',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+                background: '#1e293b',
+                color: '#ffffff'
+            });
             return;
         }
 
@@ -85,11 +125,28 @@ function ManageCarsPage() {
             .then(() => {
                 setIsEditModalOpen(false);
                 setEditingCar(null);
+                
+                Swal.fire({
+                    title: 'Updated!',
+                    text: 'Vehicle details have been successfully updated.',
+                    icon: 'success',
+                    confirmButtonColor: '#10b981',
+                    background: '#1e293b',
+                    color: '#ffffff'
+                });
+                
                 fetchCars();
             })
             .catch((error) => {
                 console.error("Error updating car:", error);
-                alert("Failed to update the vehicle details.");
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Failed to update the vehicle details.',
+                    icon: 'error',
+                    confirmButtonColor: '#ef4444',
+                    background: '#1e293b',
+                    color: '#ffffff'
+                });
             });
     };
 

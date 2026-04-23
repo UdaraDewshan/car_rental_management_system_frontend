@@ -20,8 +20,20 @@ function BookingPage() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
 
-    const handleLogout = () => {
-        if (window.confirm("Are you sure you want to log out?")) {
+    const handleLogout = async () => {
+        const result = await Swal.fire({
+            title: 'Ready to leave?',
+            text: "You will be logged out of your account.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#4f46e5',
+            confirmButtonText: 'Yes, log out',
+            background: '#1e293b',
+            color: '#ffffff'
+        });
+
+        if (result.isConfirmed) {
             localStorage.removeItem('token');
             localStorage.removeItem('role');
             navigate('/');
@@ -30,8 +42,16 @@ function BookingPage() {
 
     useEffect(() => {
         if (!token) {
-            alert("Please log in to book a vehicle.");
-            navigate('/login');
+            Swal.fire({
+                title: 'Login Required',
+                text: 'Please log in to book a vehicle.',
+                icon: 'info',
+                confirmButtonColor: '#4f46e5',
+                background: '#1e293b',
+                color: '#ffffff'
+            }).then(() => {
+                navigate('/login');
+            });
             return;
         }
 

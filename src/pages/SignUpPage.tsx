@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { LockClosedIcon, EnvelopeIcon, TruckIcon, UserIcon, PhoneIcon, UserPlusIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 function SignUpPage() {
@@ -10,7 +11,6 @@ function SignUpPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -18,11 +18,17 @@ function SignUpPage() {
     e.preventDefault();
     
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      Swal.fire({
+        title: 'Oops!',
+        text: 'Passwords do not match. Please check again.',
+        icon: 'warning',
+        confirmButtonColor: '#f59e0b',
+        background: '#1e293b',
+        color: '#ffffff'
+      });
       return;
     }
     
-    setError('');
     setIsLoading(true);
 
     try {
@@ -35,12 +41,31 @@ function SignUpPage() {
 
       console.log("Registration Success:", response.data);
       setIsLoading(false);
-      navigate('/login');
+      
+      Swal.fire({
+        title: 'Account Created!',
+        text: 'Welcome to CarDirect. Please sign in to continue.',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#1e293b',
+        color: '#ffffff'
+      }).then(() => {
+        navigate('/login');
+      });
       
     } catch (err) {
       console.error("Registration failed:", err);
-      setError("Registration failed. Email might already be in use.");
       setIsLoading(false);
+      
+      Swal.fire({
+        title: 'Registration Failed',
+        text: 'This email might already be in use. Please try another one.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+        background: '#1e293b',
+        color: '#ffffff'
+      });
     }
   };
 
@@ -79,12 +104,6 @@ function SignUpPage() {
             <h2 className="text-2xl font-bold text-white leading-tight">Create an Account</h2>
             <p className="text-sm text-slate-300 mt-1">Join CarDirect to rent premium vehicles.</p>
           </div>
-
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/50 text-red-400 text-sm font-bold p-3 rounded-xl mb-6 text-center animate-in shake">
-              {error}
-            </div>
-          )}
 
           <form onSubmit={handleSignUp} className="space-y-4">
             

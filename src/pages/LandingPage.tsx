@@ -1,4 +1,5 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'; // useLocation, useNavigate අලුතින් ගත්තා
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { ArrowRightIcon, PlayCircleIcon, ArrowRightOnRectangleIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 function LandingPage() {
@@ -11,8 +12,20 @@ function LandingPage() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Ready to leave?',
+      text: "You will be logged out of your account.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#4f46e5',
+      confirmButtonText: 'Yes, log out',
+      background: '#1e293b',
+      color: '#ffffff'
+    });
+
+    if (result.isConfirmed) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       navigate('/');
@@ -87,7 +100,6 @@ function LandingPage() {
           )}
         </div>
       </nav>
-
 
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto mt-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-indigo-300 text-sm font-bold uppercase tracking-widest mb-8 animate-in slide-in-from-bottom-5 fade-in duration-700">
