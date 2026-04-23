@@ -45,7 +45,7 @@ function ContactPage() {
 
       <nav className="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
         <div className="text-2xl font-black text-white tracking-tighter uppercase">
-          Udara<span className="text-indigo-500">Direct</span>.Car
+          Udara<span className="text-indigo-500">Rent</span>.Car
         </div>
 
         <div className="hidden md:flex gap-8 items-center text-sm font-bold">

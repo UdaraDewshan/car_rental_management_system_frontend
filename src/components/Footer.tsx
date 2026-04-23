@@ -7,7 +7,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           
           <div className="text-sm text-slate-500 dark:text-slate-400 font-medium text-center md:text-left">
-            &copy; {currentYear} Car<span className="text-indigo-600 dark:text-indigo-400">Direct</span> Fleet Management. All rights reserved.
+            &copy; {currentYear} udara<span className="text-indigo-600 dark:text-indigo-400">rent.car</span> Fleet Management. All rights reserved.
           </div>
 
           <div className="flex items-center gap-6 text-sm font-bold text-slate-400 dark:text-slate-500">
@@ -22,7 +22,7 @@ function Footer() {
         </div>
 
         <div className="text-sm text-slate-500 dark:text-slate-400 font-medium text-center md:text-left">
-            findcar@gmal.com
+            udararent@gmal.com
           </div>
       </div>
     </footer>

@@ -55,7 +55,7 @@ function Navbar() {
               <TruckIcon className="w-6 h-6" />
             </div>
             <Link to="/admin/dashboard" className="text-xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
-              Udara<span className="text-indigo-500">Direct</span>
+              Udara<span className="text-indigo-500">rent</span>.car
             </Link>
           </div>
 

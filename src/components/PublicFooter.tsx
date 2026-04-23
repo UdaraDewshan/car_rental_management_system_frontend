@@ -13,7 +13,7 @@ function PublicFooter() {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2 text-2xl font-black text-white tracking-tighter uppercase mb-4">
               <TruckIcon className="w-8 h-8 text-indigo-500" />
-              Car<span className="text-indigo-500">Direct</span>.
+              Udara<span className="text-indigo-500">Rent.</span>car
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm font-medium">
               Experience the drive of your dreams. Premium vehicle rentals for those who value performance, comfort, and unmatched style.
@@ -43,7 +43,7 @@ function PublicFooter() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-slate-500 text-sm font-medium">
-            &copy; {currentYear} CarDirect Fleet Management. All rights reserved.
+            &copy; {currentYear} udaraRent.car Fleet Management. All rights reserved.
           </div>
           <div className="flex gap-4 text-slate-500">
             <a href="#" className="hover:text-white transition-colors">
