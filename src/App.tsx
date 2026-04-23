@@ -19,6 +19,7 @@ import PublicFooter from './components/PublicFooter';
 import AdminRoute from './components/AdminRoute';
 import ManageBookingsPage from './pages/admin/ManageBookingsPage';
 import AddDriverPage from './pages/admin/AddDriverPage';
+import ManageCustomersPage from './pages/admin/ManageCustomersPage';
 
 
 function AppLayout() {
@@ -52,6 +53,7 @@ function AppLayout() {
             <Route path="/admin/manage-cars" element={<ManageCarsPage />} />
             <Route path="/admin/manage-bookings" element={<ManageBookingsPage />} />
             <Route path="/admin/add-driver" element={<AddDriverPage />} />
+            <Route path="/admin/manage-customers" element={<ManageCustomersPage />} />
           </Route>
 
         </Routes>
