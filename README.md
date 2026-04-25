@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# 🚗 UdaraDirect.Car - Enterprise Fleet Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-21-blue.svg)](https://reactjs.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Currently, two official plugins are available:
+**UdaraDirect.Car** is a premium, full-stack vehicle rental solution engineered for high-performance fleet operations. Built with a robust **Spring Boot** micro-service architecture and a sleek, reactive **TypeScript** frontend, this system streamlines the entire rental lifecycle from vehicle onboarding to intelligent driver assignment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 System Architecture & Logic
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project isn't just about CRUD. It implements sophisticated business logic:
+* **Driver Availability Engine:** Automated state management. Drivers are automatically marked as `Busy` when assigned to a booking and returned to `Free` state upon booking completion or rejection.
+* **Real-time Revenue Analytics:** Dynamic calculation of business health metrics directly from the persistence layer.
+* **Secure API Layer:** Stateless authentication using JWT (JSON Web Tokens).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Key Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🛠 Admin Dashboard (The Control Center)
+* **Live Metrics:** Interactive charts (Bar Charts) visualizing fleet distribution by fuel type and total revenue.
+* **Intelligent Booking Workflow:** Seamless approval process with automated driver selection dropdowns.
+* **Inventory Control:** Comprehensive vehicle management with live preview cards and image URL validation.
+* **User/Customer Management:** Searchable database of all registered clients.
+* **Driver Onboarding:** Manage a dedicated driver pool with contact and license tracking.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 👤 Customer Experience
+* **Interactive Fleet Gallery:** High-end UI with dark mode support for browsing vehicles.
+* **Smart Booking Engine:** Real-time price calculation based on rental duration and driver requirements (LKR 2,500/day driver fee).
+* **Personal Dashboard:** Track booking statuses (Pending ➔ Approved ➔ Completed) in real-time.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Technical Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React (v21), TypeScript, Tailwind CSS, Heroicons |
+| **Backend** | Spring Boot 3, Java 17, Spring Security (JWT) |
+| **Data** | MySQL, Spring Data JPA, Hibernate |
+| **Tools** | SweetAlert2 (UX), Recharts (Data Viz), ModelMapper, Lombok |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## ⚙️ Installation & Setup
+
+### Backend (Spring Boot)
+1. Navigate to the `backend` directory.
+2. Configure your MySQL credentials in `src/main/resources/application.properties`.
+3. Build and run:
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
