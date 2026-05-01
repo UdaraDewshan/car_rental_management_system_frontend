@@ -20,7 +20,7 @@ import AdminRoute from './components/AdminRoute';
 import ManageBookingsPage from './pages/admin/ManageBookingsPage';
 import AddDriverPage from './pages/admin/AddDriverPage';
 import ManageCustomersPage from './pages/admin/ManageCustomersPage';
-
+import AiChatbot from './components/AiChatbot';
 
 function AppLayout() {
   const location = useLocation();
@@ -62,6 +62,8 @@ function AppLayout() {
       {showFooter && (
         isPublicPage ? <PublicFooter /> : <Footer />
       )}
+
+      <AiChatbot />
 
     </div>
   );
